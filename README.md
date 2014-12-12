@@ -91,6 +91,8 @@ $post->add_field(
 
 ## Contributing
 
+Clone this project.
+
 ```
 $ git clone git@github.com:megumiteam/wp-post-helper.git
 ```
@@ -101,3 +103,8 @@ $ git clone git@github.com:megumiteam/wp-post-helper.git
 $ composer install
 $ vendor/bin/phpunit
 ```
+
+### Issue
+
+[https://github.com/megumiteam/wp-post-helper/issues](https://github.com/megumiteam/wp-post-helper/issues)
+
