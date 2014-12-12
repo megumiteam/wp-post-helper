@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/megumiteam/wp-post-helper.svg?branch=master)](https://travis-ci.org/megumiteam/wp-post-helper)
 
-Helper class of the `wp_insert_post()`
+Helper class for the `wp_insert_post()`
 
 ## Installation
 
@@ -90,6 +90,10 @@ $post->add_field(
 ```
 
 ## Contributing
+
+```
+$ git clone git@github.com:megumiteam/wp-post-helper.git
+```
 
 ### Run testing
 
