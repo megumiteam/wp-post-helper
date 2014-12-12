@@ -99,8 +99,25 @@ $ git clone git@github.com:megumiteam/wp-post-helper.git
 
 ### Run testing
 
+Initialize the testing environment locally:
+
+(you'll need to already have mysql, svn and wget available)
+
+```
+$ bash bin/install-wp-tests.sh wordpress_test root '' localhost latest
+```
+
+Install phpunit.
+
 ```
 $ composer install
+```
+
+The unit test files are in the `tests/` directory.
+
+To run the unit tests, just execute:
+
+```
 $ vendor/bin/phpunit
 ```
 
