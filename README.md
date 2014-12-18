@@ -25,7 +25,7 @@ $args = array(
     'post_name'    => 'slug',                  // slug
     'post_author'  => '1',                     // author's ID
     'post_date'    => '2012-11-15 20:00:00',   // post date and time
-    'post_type'    => 'posts',                 // post type (you can use custom post type)
+    'post_type'    => 'post',                 // post type (you can use custom post type)
     'post_status'  => 'publish',               // post status, publish, draft and so on
     'post_title'   => 'title',                 // post title
     'post_content' => 'content',               // post content
@@ -118,7 +118,7 @@ The unit test files are in the `tests/` directory.
 To run the unit tests, just execute:
 
 ```
-$ vendor/bin/phpunit
+$ phpunit
 ```
 
 ### Issue

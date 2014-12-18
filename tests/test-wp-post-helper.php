@@ -19,7 +19,7 @@ class WP_Post_Helper_Test extends WP_UnitTestCase {
 			'post_name'    => 'slug',                // slug
 			'post_author'  => '1',                     // author's ID
 			'post_date'    => '2012-11-15 20:00:00', // post date and time
-			'post_type'    => 'posts',               // post type (you can use custom post type)
+			'post_type'    => 'post',               // post type (you can use custom post type)
 			'post_status'  => 'publish',             // post status, publish, draft and so on
 			'post_title'   => 'title',               // post title
 			'post_content' => 'content',             // post content
@@ -40,7 +40,7 @@ class WP_Post_Helper_Test extends WP_UnitTestCase {
 		}
 
 		$this->assertSame( 2, count( get_the_tags( $post_id ) ) );
-		//$this->assertTrue( in_category( 1, $post ) ); // why it's error???
+		$this->assertTrue( in_category( 1, $post ) );
 
 		// it should be success to upload and should be attached to the post
 		$attachment_id = $helper->add_media(
