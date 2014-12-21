@@ -44,7 +44,7 @@ $args = array(
     ...
 );
 
-$helper = new Helper( $args );
+$helper = new \Megumi\WP\Post\Helper( $args );
 $post_id = $helper->insert();
 
 $attachment_id = $helper->add_media(
@@ -63,7 +63,7 @@ $args = array(
     ...
 );
 
-$helper = new Helper( $args );
+$helper = new \Megumi\WP\Post\Helper( $args );
 $post_id = $helper->insert();
 
 $post->add_meta(
@@ -80,7 +80,7 @@ $args = array(
     ...
 );
 
-$helper = new Helper( $args );
+$helper = new \Megumi\WP\Post\Helper( $args );
 $post_id = $helper->insert();
 
 $post->add_field(
@@ -124,4 +124,3 @@ $ phpunit
 ### Issue
 
 [https://github.com/megumiteam/wp-post-helper/issues](https://github.com/megumiteam/wp-post-helper/issues)
-
