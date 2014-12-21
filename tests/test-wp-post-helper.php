@@ -52,6 +52,8 @@ class WP_Post_Helper_Test extends WP_UnitTestCase {
 		);
 		$media = get_attached_media( 'image', $post_id );
 		$this->assertSame( $attachment_id, $media[ $attachment_id ]->ID );
+
+		$helper->add_meta( 'test-key', 'test-value' );
+		$this->assertSame( 'test-value', get_post_meta( $post_id, 'test-key', true ) );
 	}
 }
-
