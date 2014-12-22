@@ -33,7 +33,7 @@ $args = array(
     'post_tags'    => array( 'tag1', 'tag2' ), // post tags in an array
 );
 
-$helper = new Helper( $args );
+$helper = new Megumi\WP\Post\Helper( $args );
 $post_id = $helper->insert();
 ```
 
@@ -44,7 +44,7 @@ $args = array(
     ...
 );
 
-$helper = new \Megumi\WP\Post\Helper( $args );
+$helper = new Megumi\WP\Post\Helper( $args );
 $post_id = $helper->insert();
 
 $attachment_id = $helper->add_media(
@@ -63,7 +63,7 @@ $args = array(
     ...
 );
 
-$helper = new \Megumi\WP\Post\Helper( $args );
+$helper = new Megumi\WP\Post\Helper( $args );
 $post_id = $helper->insert();
 
 $post->add_meta(
@@ -80,7 +80,7 @@ $args = array(
     ...
 );
 
-$helper = new \Megumi\WP\Post\Helper( $args );
+$helper = new Megumi\WP\Post\Helper( $args );
 $post_id = $helper->insert();
 
 $post->add_field(
