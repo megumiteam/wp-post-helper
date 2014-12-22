@@ -11,9 +11,39 @@ class WP_Post_Helper_Test extends WP_UnitTestCase {
 	}
 
 	/**
+	* @test
+	*/
+	public function constructor_test()
+	{
+		$args = array(
+			'post_author'  => 'admin',   // author's name
+			'post_title'   => 'title',   // post title
+		);
+
+		$helper = new Helper( $args );
+		$this->assertSame( 1, $helper->get_post()->post_author );
+
+		$args = array(
+			'post_author'  => 'xxxx',   // Illegal author's name
+			'post_title'   => 'title',   // post title
+		);
+
+		$helper = new Helper( $args );
+		$this->assertSame( "", $helper->get_post()->post_author );
+
+		$args = array(
+			'post_date'  => '2014-01-01',   // Illegal author's name
+			'post_title'   => 'title',   // post title
+		);
+
+		$helper = new Helper( $args );
+		$this->assertSame( "2014-01-01 00:00:00", $helper->get_post()->post_date );
+	}
+
+	/**
 	 * @test
 	 */
-	public function post_helper_basic()
+	public function basic_test()
 	{
 		$args = array(
 			'post_name'    => 'slug',                // slug
@@ -56,4 +86,5 @@ class WP_Post_Helper_Test extends WP_UnitTestCase {
 		$helper->add_meta( 'test-key', 'test-value' );
 		$this->assertSame( 'test-value', get_post_meta( $post_id, 'test-key', true ) );
 	}
+
 }

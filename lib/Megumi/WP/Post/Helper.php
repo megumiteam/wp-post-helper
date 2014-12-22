@@ -30,11 +30,12 @@ if ( defined( 'ABSPATH' ) ) :
 	require_once( ABSPATH . 'wp-admin/includes/post.php' );
 
 	class Helper {
-		public $post;
+
+		private $post;
 
 		private $postid = false;
-		private $attachment_id = array();
 
+		private $attachment_id = array();
 		private $tags   = array();
 		private $medias = array();
 		private $metas  = array();
@@ -42,32 +43,11 @@ if ( defined( 'ABSPATH' ) ) :
 		private $media_count = 0;
 		private $terms  = array();
 
-		function __construct( $args = array() ){
-			$this->init( $args );
-		}
-
-		// Get PostID
-		public function postid(){
-			return $this->postid;
-		}
-
-		// Get Attachment ID
-		public function attachment_id(){
-			return $this->attachment_id;
-		}
-
-		// Init Post Data
-		public function init( $args = array() ){
+		function __construct( $args = array() )
+		{
 			if ( is_object( $args ) ) {
 				$args = (array) $args;
 			}
-
-			$this->attachment_id = array();
-			$this->tags   = array();
-			$this->medias = array();
-			$this->metas  = array();
-			$this->fields = array();
-			$this->media_count = 0;
 
 			if ( is_numeric( $args ) ) {
 				$post = get_post( intval( $args ) );
@@ -89,8 +69,21 @@ if ( defined( 'ABSPATH' ) ) :
 			}
 		}
 
+		// Get PostID
+		public function get_post_id()
+		{
+			return $this->postid;
+		}
+
+		// Get Attachment ID
+		public function get_attachment_id()
+		{
+			return $this->attachment_id;
+		}
+
 		// Set Post Data
-		public function set( $args ) {
+		private function set( $args )
+		{
 			if ( is_object( $args ) ) {
 				$args = (array) $args;
 			}
@@ -109,6 +102,26 @@ if ( defined( 'ABSPATH' ) ) :
 					$this->set( $post );
 				}
 				unset( $post );
+			}
+
+			if ( isset( $args['post_date'] ) && $args['post_date'] ) {
+				$args['post_date'] = date( "Y-m-d H:i:s", strtotime( $args['post_date'] ) );
+			}
+
+			// setup author
+			if ( isset( $args['post_author'] ) && $args['post_author'] && ! intval( $args['post_author'] ) ) {
+				$u = get_user_by( 'login', $args['post_author'] );
+				if ( $u ) {
+					$args['post_author'] = $u->ID;
+				} else {
+					unset( $args['post_author'] );
+				}
+			}
+
+			// insert and set category
+			if ( isset( $args['post_category'] ) && is_array( $args['post_category'] )
+						&& count( $args['post_category'] ) ) {
+				$args['post_category'] = wp_create_categories( $args['post_category'] );
 			}
 
 			$post = $this->post;
@@ -131,14 +144,15 @@ if ( defined( 'ABSPATH' ) ) :
 		}
 
 		// Add Post
-		public function insert(){
+		public function insert()
+		{
 			if ( ! isset( $this->post ) ) {
 				return false;
 			}
 
 			$this->postid   = 0;
 			$this->post->ID = 0;
-			$postid = wp_insert_post( $this->post );
+			$postid = wp_insert_post( $this->post, true );
 			if ( $postid && ! is_wp_error( $postid ) ) {
 				$this->postid   = $postid;
 				$this->post->ID = $postid;
@@ -146,12 +160,13 @@ if ( defined( 'ABSPATH' ) ) :
 			} else {
 				$this->postid   = $postid;
 				$this->post->ID = 0;
-				return false;
+				return $postid;
 			}
 		}
 
 		// Update Post
-		public function update(){
+		public function update()
+		{
 			if ( ! isset( $this->post ) ) {
 				return false;
 			}
@@ -171,7 +186,8 @@ if ( defined( 'ABSPATH' ) ) :
 			}
 		}
 
-		private function add_related_meta( $postid ){
+		private function add_related_meta( $postid )
+		{
 			if ( ! $postid || is_wp_error( $postid ) ) {
 				return false;
 			}
@@ -217,7 +233,8 @@ if ( defined( 'ABSPATH' ) ) :
 		}
 
 		// Add Tag
-		public function add_tags( $tags = array() ){
+		public function add_tags( $tags = array() )
+		{
 			$tags = is_array( $tags ) ? $tags : explode( ',', $tags );
 			foreach ( $tags as $tag ) {
 				if ( ! empty( $tag ) && ! array_search( $tag, $this->tags ) ) {
@@ -234,7 +251,8 @@ if ( defined( 'ABSPATH' ) ) :
 		}
 
 		// add terms
-		public function add_terms( $taxonomy, $terms ){
+		public function add_terms( $taxonomy, $terms )
+		{
 			if ( ! $this->postid ) {
 				if ( ! isset( $this->terms[ $taxonomy ] ) ) {
 					$this->terms[ $taxonomy ] = array();
@@ -250,7 +268,8 @@ if ( defined( 'ABSPATH' ) ) :
 		}
 
 		// Add Media
-		public function add_media( $filename, $title = null, $content = null, $excerpt = null, $thumbnail = false ){
+		public function add_media( $filename, $title = null, $content = null, $excerpt = null, $thumbnail = false )
+		{
 			if ( ! $this->postid ) {
 				$this->medias[ $filename ] = array(
 					$title,
@@ -313,7 +332,8 @@ if ( defined( 'ABSPATH' ) ) :
 		}
 
 		// Add Custom Field
-		public function add_meta( $metakey, $val, $unique = true ){
+		public function add_meta( $metakey, $val, $unique = true )
+		{
 			if ( ! $this->postid ) {
 				$this->metas[ $metakey ] = array( $val, $unique );
 			} else {
@@ -322,7 +342,8 @@ if ( defined( 'ABSPATH' ) ) :
 		}
 
 		// Add Advanced Custom Field
-		public function add_field( $field_key, $val ){
+		public function add_field( $field_key, $val )
+		{
 			if ( ! $this->postid ) {
 				$this->fields[ $field_key ] = $val;
 			} else {
@@ -330,7 +351,13 @@ if ( defined( 'ABSPATH' ) ) :
 			}
 		}
 
-		private function remote_get_file( $url = null, $file_dir = '' ) {
+		public function get_post()
+		{
+			return $this->post;
+		}
+
+		private function remote_get_file( $url = null, $file_dir = '' )
+		{
 			if ( ! $url ) {
 				return false;
 			}
