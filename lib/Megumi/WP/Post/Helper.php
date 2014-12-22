@@ -118,12 +118,6 @@ if ( defined( 'ABSPATH' ) ) :
 				}
 			}
 
-			// insert and set category
-			if ( isset( $args['post_category'] ) && is_array( $args['post_category'] )
-						&& count( $args['post_category'] ) ) {
-				$args['post_category'] = wp_create_categories( $args['post_category'] );
-			}
-
 			$post = $this->post;
 			foreach ( $post as $key => &$val ) {
 				if ( 'ID' !== $key && isset( $args[ $key ] ) ) {
