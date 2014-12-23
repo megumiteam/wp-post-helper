@@ -11,8 +11,32 @@ class WP_Post_Helper_Test extends WP_UnitTestCase {
 	}
 
 	/**
-	* @test
-	*/
+	 * @test
+	 */
+	public function update_test()
+	{
+		$args = array(
+			'post_title' => 'original post',   // post title
+		);
+
+		$helper = new Helper( $args );
+		$original = $helper->insert();
+		$this->assertSame( 'original post', get_post( $original )->post_title );
+
+		$args = array(
+			'ID'         => $original,
+			'post_title' => 'updated post',   // post title
+		);
+
+		$helper = new Helper( $args );
+		$updated = $helper->insert();
+		$this->assertSame( 'updated post', get_post( $updated )->post_title );
+		$this->assertSame( $updated, $original );
+	}
+
+	/**
+	 * @test
+	 */
 	public function constructor_test()
 	{
 		$args = array(

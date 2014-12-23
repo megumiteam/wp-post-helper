@@ -123,8 +123,6 @@ if ( defined( 'ABSPATH' ) ) :
 				return false;
 			}
 
-			$this->postid   = 0;
-			$this->post->ID = 0;
 			$postid = wp_insert_post( $this->post, true );
 			if ( $postid && ! is_wp_error( $postid ) ) {
 				$this->postid   = $postid;
@@ -138,26 +136,26 @@ if ( defined( 'ABSPATH' ) ) :
 		}
 
 		// Update Post
-		public function update()
-		{
-			if ( ! isset( $this->post ) ) {
-				return false;
-			}
-
-			$postid =
-				$this->postid
-				? wp_update_post( $this->post )
-				: wp_insert_post( $this->post );
-			if ( $postid && ! is_wp_error( $postid ) ) {
-				$this->postid   = $postid;
-				$this->post->ID = $postid;
-				return $this->add_related_meta( $postid ) ? $postid : false;
-			} else {
-				$this->postid   = false;
-				$this->post->ID = 0;
-				return false;
-			}
-		}
+		// public function update()
+		// {
+		// 	if ( ! isset( $this->post ) ) {
+		// 		return false;
+		// 	}
+		//
+		// 	$postid =
+		// 		$this->postid
+		// 		? wp_update_post( $this->post )
+		// 		: wp_insert_post( $this->post );
+		// 	if ( $postid && ! is_wp_error( $postid ) ) {
+		// 		$this->postid   = $postid;
+		// 		$this->post->ID = $postid;
+		// 		return $this->add_related_meta( $postid ) ? $postid : false;
+		// 	} else {
+		// 		$this->postid   = false;
+		// 		$this->post->ID = 0;
+		// 		return false;
+		// 	}
+		// }
 
 		private function add_related_meta( $postid )
 		{
