@@ -1,6 +1,6 @@
 # megumi/wp-post-helper
 
-[![Build Status](https://travis-ci.org/megumiteam/wp-post-helper.svg?branch=master)](https://travis-ci.org/megumiteam/wp-post-helper)
+[![Build Status](https://travis-ci.org/megumiteam/wp-post-helper.svg?branch=master)](https://travis-ci.org/megumiteam/wp-post-helper) [![Latest Stable Version](https://poser.pugx.org/megumi/wp-post-helper/v/stable.svg)](https://packagist.org/packages/megumi/wp-post-helper) [![Total Downloads](https://poser.pugx.org/megumi/wp-post-helper/downloads.svg)](https://packagist.org/packages/megumi/wp-post-helper) [![Latest Unstable Version](https://poser.pugx.org/megumi/wp-post-helper/v/unstable.svg)](https://packagist.org/packages/megumi/wp-post-helper) [![License](https://poser.pugx.org/megumi/wp-post-helper/license.svg)](https://packagist.org/packages/megumi/wp-post-helper)
 
 Helper class for the `wp_insert_post()`
 
