@@ -38,6 +38,14 @@ class WP_Post_Helper_Test extends WP_UnitTestCase {
 
 		$helper = new Helper( $args );
 		$this->assertSame( "2014-01-01 00:00:00", $helper->get_post()->post_date );
+
+		$args = array(
+			'ID'  => 1,   // Illegal author's name
+			'post_title'   => 'title',   // post title
+		);
+
+		$helper = new Helper( $args );
+		$this->assertSame( 1, $helper->get_post()->ID );
 	}
 
 	/**

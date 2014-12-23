@@ -49,23 +49,10 @@ if ( defined( 'ABSPATH' ) ) :
 				$args = (array) $args;
 			}
 
-			if ( is_numeric( $args ) ) {
-				$post = get_post( intval( $args ) );
-				if ( $post && isset( $post->ID ) && ! is_wp_error( $post ) ) {
-					$this->post_id = $post->ID;
-					$this->post = $post;
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				$this->post = get_default_post_to_edit();
-				$this->post->post_category = null;
-				if ( is_array( $args ) && count( $args ) > 0 ) {
-					return $this->set( $args );
-				} else {
-					return true;
-				}
+			$this->post = get_default_post_to_edit();
+			$this->post->post_category = null;
+			if ( is_array( $args ) && count( $args ) > 0 ) {
+				$this->set( $args );
 			}
 		}
 
@@ -92,18 +79,6 @@ if ( defined( 'ABSPATH' ) ) :
 				return false;
 			}
 
-			if ( isset( $args['ID'] ) || isset( $args['post_id'] ) ) {
-				$post_id = isset( $args['ID'] ) ? $args['ID'] : $args['post_id'];
-				$post = get_post( $post_id, 'ARRAY_A' );
-				if ( isset( $post['ID'] ) ) {
-					$this->post_id  = $post_id;
-					$this->post->ID = $post_id;
-					unset( $post['ID'] );
-					$this->set( $post );
-				}
-				unset( $post );
-			}
-
 			if ( isset( $args['post_date'] ) && $args['post_date'] ) {
 				$args['post_date'] = date( "Y-m-d H:i:s", strtotime( $args['post_date'] ) );
 			}
@@ -125,6 +100,10 @@ if ( defined( 'ABSPATH' ) ) :
 				}
 			}
 			$this->post = $post;
+
+			if ( isset( $args['ID'] ) && intval( $args['ID'] ) ) {
+				$this->post->ID = $args['ID'];
+			}
 
 			if ( isset( $args['post_tags'] ) ) {
 				$this->add_tags(
